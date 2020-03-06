@@ -5,7 +5,7 @@ var creeps_spawn = require('creeps_respawn.js');
 
 module.exports.loop = function() {
 
-    creeps_spawn.run(Game)
+    creeps_spawn.run(Game);
 
     for (var name in Game.rooms) {
         //if (Game.rooms[name].energyAvailable == Game.rooms[name].energyCapacityAvailable){
