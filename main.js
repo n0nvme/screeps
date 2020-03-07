@@ -11,7 +11,9 @@ module.exports.loop = function() {
         //if (Game.rooms[name].energyAvailable == Game.rooms[name].energyCapacityAvailable){
         //Game.rooms[name].createConstructionSite(19, 39, STRUCTURE_EXTENSION);
         //}
-        console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy');
+        if (Game.time % 5 == 0){
+            console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy');
+        }
     }
 
     for (var name in Game.creeps) {
