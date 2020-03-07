@@ -9,7 +9,7 @@ var roleRepairer = {
         }
         if (!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
             creep.memory.repairing = true;
-            creep.say('🚧 build');
+            creep.say('🚧 repair');
         }
 
         if (creep.memory.repairing) {
@@ -30,10 +30,6 @@ var roleRepairer = {
                 }
             }
         } else {
-            //var sources = creep.room.find(FIND_SOURCES);
-            //if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-            //    creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
-            //}
             var targets = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
                     return (structure.structureType == STRUCTURE_EXTENSION ||
