@@ -43,7 +43,7 @@ var creeps_spawn = {
         if (repairers.length < 2 && available_energy >= 300) {
             var newName = 'Repairer' + current_time;
             console.log('Spawning new repairer: ' + newName);
-            game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, MOVE], newName, { memory: { role: 'repairer' } });
+            game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, MOVE], newName, { memory: { role: 'repairer' } });
             return
         }
         if (builders.length < 2 && available_energy < 550 && available_energy >= 300) {
