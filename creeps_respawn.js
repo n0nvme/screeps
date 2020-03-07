@@ -9,30 +9,30 @@ var creeps_spawn = {
         var available_energy = game.rooms['W12S3'].energyAvailable;
         var current_time = game.time;
 
-        if (harvesters1.length < 2 && available_energy < 550 && available_energy >= 300) {
+        if (harvesters1.length < 3 && available_energy < 550 && available_energy >= 300) {
             var newName = 'Harvester' + current_time;
             console.log('Spawning new harvester: ' + newName);
             game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'harvester', target: 1 } });
             return
-        } else if (harvesters1.length < 2 && available_energy >= 550) {
+        } else if (harvesters1.length < 3 && available_energy >= 550) {
             var newName = 'HarvesterBIG' + current_time;
             console.log('Spawning new big harvester: ' + newName);
             game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 1 } });
             return
         }
 
-        if (harvesters0.length < 2 && available_energy < 550 && available_energy >= 300) {
+        if (harvesters0.length < 3 && available_energy < 550 && available_energy >= 300) {
             var newName = 'Harvester' + current_time;
             console.log('Spawning new harvester: ' + newName);
             game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'harvester', target: 0 } });
             return
-        } else if (harvesters0.length < 2 && available_energy >= 550) {
+        } else if (harvesters0.length < 3 && available_energy >= 550) {
             var newName = 'HarvesterBIG' + current_time;
             console.log('Spawning new big harvester: ' + newName);
             game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 0 } });
             return
         }
-        if (upgraders.length < 3, available_energy >= 300) {
+        if (upgraders.length < 2, available_energy >= 300) {
             var newName = 'Upgrader' + current_time;
             console.log('Spawning new upgrader: ' + newName);
             game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, MOVE], newName, { memory: { role: 'upgrader' } });
