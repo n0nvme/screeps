@@ -12,7 +12,7 @@ module.exports.loop = function() {
         //Game.rooms[name].createConstructionSite(19, 39, STRUCTURE_EXTENSION);
         //}
         if (Game.time % 5 == 0){
-            console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy');
+            console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy && ' + Game.rooms[name].creeps.length) + ' creeps';
         }
     }
 
