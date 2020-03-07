@@ -1,9 +1,10 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var roleRepairer = require('role.repairer');
 var creeps_spawn = require('creeps_respawn');
 
-module.exports.loop = function() {
+module.exports.loop = function () {
 
     creeps_spawn.run(Game);
 
@@ -11,8 +12,8 @@ module.exports.loop = function() {
         //if (Game.rooms[name].energyAvailable == Game.rooms[name].energyCapacityAvailable){
         //Game.rooms[name].createConstructionSite(19, 39, STRUCTURE_EXTENSION);
         //}
-        if (Game.time % 5 == 0){
-            console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy && ' + Game.rooms[name].creeps.length) + ' creeps';
+        if (Game.time % 5 == 0) {
+            console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy && ' + _.filter(Game.creeps, (creep) => creep.room == Game.rooms[name]).length + ' creeps total');
         }
     }
 
@@ -31,6 +32,9 @@ module.exports.loop = function() {
         }
         if (creep.memory.role == 'builder') {
             roleBuilder.run(creep);
+        }
+        if (creep.memory.role == 'repairer') {
+            roleRepairer.run(creep)
         }
     }
 }
