@@ -1,7 +1,7 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
-var creeps_spawn = require('creeps_respawn.js');
+var creeps_spawn = require('creeps_respawn');
 
 module.exports.loop = function() {
 
