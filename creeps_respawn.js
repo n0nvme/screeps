@@ -32,13 +32,13 @@ var creeps_spawn = {
             game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 0 } });
             return
         }
-        if (upgraders.length < 2, available_energy >= 300) {
+        if (upgraders.length < 2 && available_energy >= 300) {
             var newName = 'Upgrader' + current_time;
             console.log('Spawning new upgrader: ' + newName);
             game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, MOVE], newName, { memory: { role: 'upgrader' } });
             return
         }
-        if (builders.length < 2, available_energy >= 300) {
+        if (builders.length < 2 && available_energy >= 300) {
             var newName = 'Builder' + current_time;
             console.log('Spawning new builder: ' + newName);
             game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, MOVE], newName, { memory: { role: 'builder' } });
