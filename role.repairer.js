@@ -21,7 +21,7 @@ var roleRepairer = {
 
             if (targets.length) {
                 if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' }});
+                    creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             }
             else {
@@ -32,8 +32,7 @@ var roleRepairer = {
         } else {
             var targets = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_EXTENSION ||
-                        structure.structureType == STRUCTURE_SPAWN) && structure.energy <= structure.energyCapacity;
+                    return (structure.structureType == STRUCTURE_CONTAINER);
                 }
             });
             if (targets.length > 0) {
