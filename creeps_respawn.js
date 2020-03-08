@@ -6,8 +6,11 @@ var creeps_spawn = {
         var builders = _.filter(game.creeps, (creep) => creep.memory.role == 'builder');
         var upgraders = _.filter(game.creeps, (creep) => creep.memory.role == 'upgrader');
         var repairers = _.filter(game.creeps, (creep) => creep.memory.role == 'repairer');
+        var scouts = _.filter(game.creeps, (creep) => creep.memory.role == 'scout');
+        var couriers = _.filter(game.creeps, (creep) => creep.memory.role == 'courier');
 
-        var available_energy = game.rooms['W12S3'].energyAvailable;
+
+        var available_energy = game.rooms['E24N9'].energyAvailable;
         var current_time = game.time;
 
         var spawn_level = 0;
@@ -17,23 +20,6 @@ var creeps_spawn = {
             spawn_level = 2;
         } else if (available_energy >= 800) {
             spawn_level = 3;
-        }
-
-        if (harvesters1.length < 3 && spawn_level == 1) {
-            var newName = 'Harvester' + current_time;
-            console.log('Spawning new harvester: ' + newName);
-            game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level } });
-            return
-        } else if (harvesters1.length < 3 && spawn_level == 2) {
-            var newName = 'HarvesterBIG' + current_time;
-            console.log('Spawning new big harvester: ' + newName);
-            game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level } });
-            return
-        } else if (harvesters1.length < 3 && spawn_level == 3) {
-            var newName = 'HarvesterBOSS' + current_time;
-            console.log('Spawning new BOSS harvester: ' + newName);
-            game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level } });
-            return
         }
 
         if (harvesters0.length < 3 && spawn_level == 1) {
@@ -50,6 +36,23 @@ var creeps_spawn = {
             var newName = 'HarvesterBOSS' + current_time;
             console.log('Spawning new BOSS harvester: ' + newName);
             game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 0, level: spawn_level } });
+            return
+        }
+
+        if (harvesters1.length < 3 && spawn_level == 1) {
+            var newName = 'Harvester' + current_time;
+            console.log('Spawning new harvester: ' + newName);
+            game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level } });
+            return
+        } else if (harvesters1.length < 3 && spawn_level == 2) {
+            var newName = 'HarvesterBIG' + current_time;
+            console.log('Spawning new big harvester: ' + newName);
+            game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level } });
+            return
+        } else if (harvesters1.length < 3 && spawn_level == 3) {
+            var newName = 'HarvesterBOSS' + current_time;
+            console.log('Spawning new BOSS harvester: ' + newName);
+            game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level } });
             return
         }
 
@@ -87,11 +90,25 @@ var creeps_spawn = {
             console.log('Spawning new big builder: ' + newName)
             game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], newName,
                 { memory: { role: 'builder' }, level: spawn_level });
-        } else if (builders.length < 4 && spawn_level == 3) {
+        } else if (builders.length < 2 && spawn_level == 3) {
             var newName = 'BuilderBOSS' + current_time;
             console.log('Spawning new BOSS builder: ' + newName)
             game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName,
                 { memory: { role: 'builder' }, level: spawn_level });
+        }
+
+
+        // if (scouts.length < 1 && spawn_level != 0) {
+        //     var newName = 'Scout' + current_time;
+        //     console.log('Spawning new scout: ' + newName);
+        //     game.spawns['Spawn1'].spawnCreep([CARRY, MOVE, MOVE, MOVE, MOVE, CLAIM], newName, { memory: { role: 'scout' }, level: spawn_level });
+        //     return
+        // }
+        if (couriers.length < 1 && spawn_level != 0) {
+            var newName = 'Courier' + current_time;
+            console.log('Spawning new courier: ' + newName);
+            game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'courier' }, level: spawn_level });
+            return
         }
     }
 }
