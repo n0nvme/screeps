@@ -13,7 +13,11 @@ var roleCourier = {
         }
 
         if (creep.memory.moving) {
-            var targets = creep.room.find(FIND_TOMBSTONES);
+            var targets = creep.room.find(FIND_TOMBSTONES, {
+                filter: (structure) => {
+                    return (structure.store.length != 0);
+                }
+            });
             if (targets.length) {
                 console.log(targets)
                 console.log(creep.withdraw(targets[0], RESOURCE_ENERGY))
