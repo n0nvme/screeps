@@ -50,7 +50,7 @@ var roleRepairer = {
         } else {
             var targets = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_CONTAINER);
+                    return (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy > 0);
                 }
             });
             if (targets.length > 0) {

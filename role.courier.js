@@ -35,7 +35,7 @@ var roleCourier = {
         } else {
             var targets = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_TOWER);
+                    return (structure.structureType == STRUCTURE_TOWER && structure.energy < 1000);
                 }
             });
             if (targets.length > 0) {
