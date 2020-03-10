@@ -25,15 +25,20 @@ var roleRemoteHarvester = {
             if (creep.room.name !== creep.memory.main_room) {
                 creep.moveTo(new RoomPosition(25, 25, creep.memory.main_room), { visualizePathStyle: { stroke: '#ffffff' } })
             } else {
-
-                var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    filter: (structure) => {
-                        return (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy < 2000)
+                if (creep.room.storage) {
+                    if (creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(creep.room.storage, { visualizePathStyle: { stroke: '#ffffff' } });
                     }
-                });
-                if (target) {
-                    if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+                } else {
+                    var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                        filter: (structure) => {
+                            return (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy < 2000)
+                        }
+                    });
+                    if (target) {
+                        if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+                        }
                     }
                 }
             }

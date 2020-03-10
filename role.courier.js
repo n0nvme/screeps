@@ -13,29 +13,37 @@ var roleCourier = {
         }
 
         if (creep.memory.moving) {
-            var targets = creep.room.find(FIND_TOMBSTONES, {
+            var target = creep.pos.findClosestByPath(FIND_TOMBSTONES, {
                 filter: (structure) => {
-                    return (structure.store.length != 0);
+                    return (structure.store.length > 0);
                 }
             });
-            if (targets.length) {
-                console.log(targets)
-                console.log(creep.withdraw(targets[0], RESOURCE_ENERGY))
+            // console.log(JSON.stringify(target));
 
-                if (creep.withdraw(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+            if (target) {
+                // console.log(JSON.stringify(target));
+                // console.log(creep.withdraw(target, RESOURCE_ENERGY))
+
+                if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             } else {
-                var targets = creep.room.find(FIND_DROPPED_RESOURCES);
-                if (targets.length) {
-                    creep.moveTo(targets[0]);
-                    creep.pickup(targets[0]);
+                var target = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+                if (target) {
+                    creep.moveTo(target);
+                    creep.pickup(target);
+                } else {
+                    if (creep.room.storage) {
+                        if (creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(creep.room.storage, { visualizePathStyle: { stroke: '#ffffff' } });
+                        }
+                    }
                 }
             }
         } else {
             var targets = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_TOWER && structure.energy < 1000);
+                    return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
                 }
             });
             if (targets.length > 0) {
@@ -43,16 +51,28 @@ var roleCourier = {
                     creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             } else {
-                var targets = creep.room.find(FIND_STRUCTURES, {
+                var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: (structure) => {
-                        return (structure.structureType == STRUCTURE_CONTAINER);
+                        return (((structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity) || (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy < structure.storeCapacity));
                     }
                 });
-                if (targets.length > 0) {
-                    if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+                if (target) {
+                    if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
                     }
                 }
+                // } else {
+                //     var targets = creep.room.find(FIND_STRUCTURES, {
+                //         filter: (structure) => {
+                //             return (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy < structure.storeCapacity);
+                //         }
+                //     });
+                //     if (targets.length > 0) {
+                //         if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                //             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+                //         }
+                //     }
+                // }
             }
         }
     }
