@@ -28,7 +28,7 @@ var roleRemoteHarvester = {
 
                 var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: (structure) => {
-                        return (structure.structureType == STRUCTURE_CONTAINER)
+                        return (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy < 2000)
                     }
                 });
                 if (target) {
