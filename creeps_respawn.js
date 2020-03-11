@@ -1,7 +1,7 @@
 var creeps_spawn = {
     /** @param {Game} game **/
     run: function (game) {
-        if (!game.spawns['Spawn1'].spawning) {
+        if (!game.spawns['Spawn1'].spawning && _.filter(game.creeps).length < 28) {
             var main_room = 'E24N9'
             var available_energy = game.rooms[main_room].energyAvailable;
             var current_time = game.time;
@@ -61,10 +61,17 @@ var creeps_spawn = {
                 console.log('Spawning new big harvester: ' + newName);
                 game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level, main_room: main_room } });
                 return
-            } else if (harvesters1.length < 5 && spawn_level >= 3) {
+            } else if (harvesters1.length < 3 && spawn_level >= 3) {
                 var newName = 'HarvesterBOSS' + current_time;
                 console.log('Spawning new BOSS harvester: ' + newName);
                 game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level, main_room: main_room } });
+                return
+            }
+
+            if (repairers.length < 2 && spawn_level != 0) {
+                var newName = 'Repairer' + current_time;
+                console.log('Spawning new repairer: ' + newName);
+                game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, MOVE], newName, { memory: { role: 'repairer', level: spawn_level, main_room: main_room } });
                 return
             }
 
@@ -87,7 +94,7 @@ var creeps_spawn = {
                 } else if (remote_harvesters[room_name] < 3 && spawn_level >= 4) {
                     var newName = 'RemoteHarvesterULTRA' + current_time;
                     console.log('Spawning new ULTRA remote harvester: ' + newName);
-                    game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_harvester', target_room: room_name, level: spawn_level, main_room: main_room } });
+                    game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_harvester', target_room: room_name, level: spawn_level, main_room: main_room } });
                     return
                 }
             }
@@ -112,14 +119,6 @@ var creeps_spawn = {
                 console.log('Spawning new ULTRA upgrader: ' + newName);
                 game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName,
                     { memory: { role: 'upgrader', level: spawn_level, main_room: main_room } });
-            }
-
-
-            if (repairers.length < 1 && spawn_level != 0) {
-                var newName = 'Repairer' + current_time;
-                console.log('Spawning new repairer: ' + newName);
-                game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, MOVE], newName, { memory: { role: 'repairer', level: spawn_level, main_room: main_room } });
-                return
             }
 
             if (builders.length < 2 && spawn_level == 1) {
@@ -157,7 +156,7 @@ var creeps_spawn = {
                 console.log('Spawning new courier: ' + newName);
                 game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'courier', level: spawn_level, main_room: main_room } });
                 return
-            } else if (couriers.length < 5 && spawn_level >= 3) {
+            } else if (couriers.length < 4 && spawn_level >= 3) {
                 var newName = 'CourierBIG' + current_time;
                 console.log('Spawning new BIG courier: ' + newName);
                 game.spawns['Spawn1'].spawnCreep([WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'courier', level: spawn_level, main_room: main_room } });

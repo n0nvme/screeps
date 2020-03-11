@@ -8,6 +8,7 @@ var roleRemoteHarvester = require('role.remote_harvester');
 var creeps_spawn = require('creeps_respawn');
 
 module.exports.loop = function () {
+    console.log('cpu used:')
 
     creeps_spawn.run(Game);
 
@@ -20,35 +21,36 @@ module.exports.loop = function () {
         }
         // Game.find();
     }
-
-    for (var name in Game.creeps) {
+    for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            console.log('kek')
             delete Memory.creeps[name];
             console.log('Clearing non-existing creep memory:', name);
-        }
-        var creep = Game.creeps[name];
-        //creep.say(name);
-        if (creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
-        }
-        if (creep.memory.role == 'remote_harvester') {
-            roleRemoteHarvester.run(creep);
-        }
-        if (creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-        if (creep.memory.role == 'builder') {
-            roleBuilder.run(creep);
-        }
-        if (creep.memory.role == 'repairer') {
-            roleRepairer.run(creep)
-        }
-        if (creep.memory.role == 'scout') {
-            roleScout.run(creep)
-        }
-        if (creep.memory.role == 'courier') {
-            roleCourier.run(creep)
+            continue;
+        } else {
+            var creep = Game.creeps[name];
+            // creep.say(name);
+            if (creep.memory.role == 'harvester') {
+                roleHarvester.run(creep);
+            } else if (creep.memory.role == 'remote_harvester') {
+                roleRemoteHarvester.run(creep);
+            } else if (creep.memory.role == 'upgrader') {
+                roleUpgrader.run(creep);
+            }
+            else if (creep.memory.role == 'builder') {
+                roleBuilder.run(creep);
+            }
+            else if (creep.memory.role == 'repairer') {
+                roleRepairer.run(creep)
+            }
+            // else if (creep.memory.role == 'scout') {
+            //     roleScout.run(creep)
+            // }
+            else if (creep.memory.role == 'courier') {
+                roleCourier.run(creep)
+            }
+            // console.log(Game.cpu.getUsed())
         }
     }
+    console.log(Game.cpu.getUsed())
+
 }

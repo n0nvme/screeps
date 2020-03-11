@@ -26,7 +26,7 @@ var roleHarvester = {
             });
             if (target) {
                 if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#00ee00' } });
                 }
             } else {
                 var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -36,12 +36,12 @@ var roleHarvester = {
                 })
                 if (target) {
                     if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+                        creep.moveTo(target, { visualizePathStyle: { stroke: '#00ee00' } });
                     }
                 } else {
                     if (creep.room.storage) {
                         if (creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(creep.room.storage, { visualizePathStyle: { stroke: '#ffffff' } });
+                            creep.moveTo(creep.room.storage, { visualizePathStyle: { stroke: '#00ee00' } });
                         }
                     } else {
                         var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -51,7 +51,7 @@ var roleHarvester = {
                         })
                         if (target) {
                             if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                                creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+                                creep.moveTo(target, { visualizePathStyle: { stroke: '#00ee00' } });
                             }
                         }
                     }
