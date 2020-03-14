@@ -1,7 +1,12 @@
 var creeps_spawn = {
     /** @param {Game} game **/
     run: function (game) {
-        if (!game.spawns['Spawn1'].spawning && _.filter(game.creeps).length < 28) {
+        if (!game.spawns['Spawn1'].spawning) {
+            var nearest_creeps = Game.spawns['Spawn1'].pos.findInRange(FIND_MY_CREEPS, 1)
+            if (nearest_creeps.length != 0 && Game.spawns['Spawn1'].renewCreep(nearest_creeps[0])) {
+                console.log('renewing ' + nearest_creeps[0].name);
+                return;
+            }
             var main_room = 'E24N9'
             var available_energy = game.rooms[main_room].energyAvailable;
             var current_time = game.time;
@@ -19,7 +24,7 @@ var creeps_spawn = {
             var builders = _.filter(game.creeps, (creep) => creep.memory.role == 'builder' && creep.memory.main_room == main_room);
             var upgraders = _.filter(game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.main_room == main_room);
             var repairers = _.filter(game.creeps, (creep) => creep.memory.role == 'repairer' && creep.memory.main_room == main_room);
-            var scouts = _.filter(game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.main_room == main_room);
+            // var scouts = _.filter(game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.main_room == main_room);
             var couriers = _.filter(game.creeps, (creep) => creep.memory.role == 'courier' && creep.memory.main_room == main_room);
 
             var spawn_level = 0;
@@ -27,12 +32,13 @@ var creeps_spawn = {
                 spawn_level = 1
             } else if (available_energy >= 550 && available_energy < 800) {
                 spawn_level = 2;
-            } else if (available_energy >= 800 && available_energy < 1300) {
+            } else if (available_energy >= 800 && available_energy <= 1300) {
                 spawn_level = 3;
             }
             else if (available_energy >= 1300) {
                 spawn_level = 4;
             }
+            // console.log(spawn_level)
 
             if (harvesters0.length < 3 && spawn_level == 1) {
                 var newName = 'Harvester' + current_time;

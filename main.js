@@ -8,7 +8,7 @@ var roleRemoteHarvester = require('role.remote_harvester');
 var creeps_spawn = require('creeps_respawn');
 
 module.exports.loop = function () {
-    console.log('cpu used:')
+    // console.log('cpu used:')
 
     creeps_spawn.run(Game);
 
@@ -16,6 +16,33 @@ module.exports.loop = function () {
         //if (Game.rooms[name].energyAvailable == Game.rooms[name].energyCapacityAvailable){
         //Game.rooms[name].createConstructionSite(19, 39, STRUCTURE_EXTENSION);
         //}
+        var towers = Game.rooms[name].find(
+            FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_TOWER } });
+
+        var hostiles = Game.rooms[name].find(FIND_HOSTILE_CREEPS);
+        if (hostiles.length > 0) {
+            var username = hostiles[0].owner.username;
+            Game.notify(`User ${username} spotted in room ${name}`);
+            console.log(`User ${username} spotted in room ${name}`);
+
+            towers.forEach(tower => tower.attack(hostiles[0]));
+        }
+        var my_creeps = Game.rooms[name].find(FIND_MY_CREEPS, {
+            filter: (creep) => {
+                return (creep.hits < creep.hitsMax);
+            }
+        });
+        if (my_creeps.length > 0) {
+            towers.forEach(tower => tower.heal(my_creeps[0]));
+        }
+        var targets = Game.rooms[name].find(FIND_STRUCTURES, {
+            filter: object => object.hits < object.hitsMax && (object.structureType == STRUCTURE_ROAD || object.structureType == STRUCTURE_WALL || object.structureType == STRUCTURE_RAMPART) && object.hits < 75000
+        });
+
+        targets.sort((a, b) => a.hits - b.hits);
+
+        towers.forEach(tower => tower.repair(targets[0]));
+
         if (Game.time % 5 == 0) {
             console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy && ' + _.filter(Game.creeps, (creep) => creep.room == Game.rooms[name]).length + ' creeps total');
         }
@@ -51,6 +78,6 @@ module.exports.loop = function () {
             // console.log(Game.cpu.getUsed())
         }
     }
-    console.log(Game.cpu.getUsed())
+    // console.log(Game.cpu.getUsed())
 
 }

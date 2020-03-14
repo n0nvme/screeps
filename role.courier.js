@@ -15,7 +15,7 @@ var roleCourier = {
         if (creep.memory.moving) {
             var target = creep.pos.findClosestByPath(FIND_TOMBSTONES, {
                 filter: (structure) => {
-                    return (structure.store.length > 0);
+                    return (structure.store.getUsedCapacity > 0);
                 }
             });
             // console.log(JSON.stringify(target));
@@ -23,8 +23,9 @@ var roleCourier = {
             if (target) {
                 // console.log(JSON.stringify(target));
                 // console.log(creep.withdraw(target, RESOURCE_ENERGY))
+                console.log(JSON.stringify(target.name))
 
-                if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                if (creep.withdraw(target, target.store.keys()[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             } else {
@@ -41,19 +42,19 @@ var roleCourier = {
                 }
             }
         } else {
-            var targets = creep.room.find(FIND_STRUCTURES, {
+            var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity);
+                    return (structure.structureType == STRUCTURE_TOWER && structure.energy < 950);
                 }
             });
-            if (targets.length > 0) {
-                if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+            if (target) {
+                if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             } else {
                 var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: (structure) => {
-                        return (((structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity) || (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy < structure.storeCapacity));
+                        return (((structure.structureType == STRUCTURE_EXTENSION && structure.energy < structure.energyCapacity) || (structure.structureType == STRUCTURE_SPAWN && structure.energy < 270)) || (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy < structure.storeCapacity));
                     }
                 });
                 if (target) {
