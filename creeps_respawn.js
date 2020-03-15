@@ -1,20 +1,29 @@
 var creeps_spawn = {
     /** @param {Game} game **/
     run: function (game) {
+        var main_room = 'E24N9'
+        for (name in Game.rooms) {
+
+        }
         if (!game.spawns['Spawn1'].spawning) {
             var nearest_creeps = Game.spawns['Spawn1'].pos.findInRange(FIND_MY_CREEPS, 1)
             if (nearest_creeps.length != 0 && Game.spawns['Spawn1'].renewCreep(nearest_creeps[0])) {
                 console.log('renewing ' + nearest_creeps[0].name);
                 return;
             }
-            var main_room = 'E24N9'
             var available_energy = game.rooms[main_room].energyAvailable;
             var current_time = game.time;
 
             var rooms_to_harvest = ['E24N8', 'E25N9', 'E25N8', 'E23N8']
+            var rooms_to_build = ['E24N8']
+
             var remote_harvesters = {}
             rooms_to_harvest.forEach(room_to_harvest => {
                 remote_harvesters[room_to_harvest] = _.filter(game.creeps, (creep) => creep.memory.role == 'remote_harvester' && creep.memory.target_room == room_to_harvest && creep.memory.main_room == main_room).length;
+            });
+            var remote_builders = {}
+            rooms_to_harvest.forEach(room_to_harvest => {
+                remote_builders[room_to_harvest] = _.filter(game.creeps, (creep) => creep.memory.role == 'remote_builder' && creep.memory.target_room == room_to_harvest && creep.memory.main_room == main_room).length;
             });
             // console.log(JSON.stringify(remote_harvesters))
 
@@ -24,7 +33,7 @@ var creeps_spawn = {
             var builders = _.filter(game.creeps, (creep) => creep.memory.role == 'builder' && creep.memory.main_room == main_room);
             var upgraders = _.filter(game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.main_room == main_room);
             var repairers = _.filter(game.creeps, (creep) => creep.memory.role == 'repairer' && creep.memory.main_room == main_room);
-            // var scouts = _.filter(game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.main_room == main_room);
+            var scouts = _.filter(game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.main_room == main_room);
             var couriers = _.filter(game.creeps, (creep) => creep.memory.role == 'courier' && creep.memory.main_room == main_room);
 
             var spawn_level = 0;
@@ -147,6 +156,30 @@ var creeps_spawn = {
                 console.log('Spawning new ULTRA builder: ' + newName)
                 game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], newName,
                     { memory: { role: 'builder', level: spawn_level, main_room: main_room } });
+            }
+
+            for (var room_name in remote_builders) {
+                if (remote_builders[room_name] < 1 && spawn_level == 1) {
+                    var newName = 'remoteBuilder' + current_time;
+                    console.log('Spawning new remote builder: ' + newName);
+                    game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'remote_builder', target_room: room_name, level: spawn_level, main_room: main_room } });
+                    return
+                } else if (remote_builders[room_name] < 2 && spawn_level == 2) {
+                    var newName = 'RemoteBuilderBIG' + current_time;
+                    console.log('Spawning new big remote builder: ' + newName);
+                    game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: room_name, level: spawn_level, main_room: main_room } });
+                    return
+                } else if (remote_builders[room_name] < 3 && spawn_level == 3) {
+                    var newName = 'RemoteBuilderBOSS' + current_time;
+                    console.log('Spawning new BOSS remote builder: ' + newName);
+                    game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: room_name, level: spawn_level, main_room: main_room } });
+                    return
+                } else if (remote_builders[room_name] < 3 && spawn_level >= 4) {
+                    var newName = 'RemoteBuilderULTRA' + current_time;
+                    console.log('Spawning new ULTRA remote builder: ' + newName);
+                    game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: room_name, level: spawn_level, main_room: main_room } });
+                    return
+                }
             }
 
 
