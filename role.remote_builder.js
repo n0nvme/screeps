@@ -3,16 +3,16 @@ var roleRemoteBuilder = {
     /** @param {Creep} creep **/
     run: function (creep) {
 
-        if (creep.memory.building && creep.carry.energy == creep.carryCapacity) {
+        if (!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
             creep.memory.building = true;
             // creep.say('🔄 refil');
         }
-        if (!creep.memory.building && creep.carry.energy == 0) {
+        if (creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
             // creep.say('🚧 repair');
         }
 
-        if (!creep.memory.building) {
+        if (creep.memory.building) {
             if (creep.room.name !== creep.memory.target_room) {
                 creep.moveTo(new RoomPosition(25, 25, creep.memory.target_room), { visualizePathStyle: { stroke: '#ffaa00' } })
             } else {
