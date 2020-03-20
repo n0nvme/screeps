@@ -2,8 +2,9 @@ var roleRepairer = {
 
     /** @param {Creep} creep **/
     run: function (creep) {
-
-        creep.moveTo(Game.flags.Flag1);
+        if (creep.claimController(creep.room.controller) != 0) {
+            creep.moveTo(Game.flags.Flag1);
+        }
     }
 };
 

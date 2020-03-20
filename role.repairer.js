@@ -22,7 +22,7 @@ var roleRepairer = {
                 }
             } else {
                 var targets = creep.room.find(FIND_STRUCTURES, {
-                    filter: structure => { return (structure.structureType == STRUCTURE_RAMPART && structure.hits < structure.hitsMax) }
+                    filter: structure => { return (structure.structureType == STRUCTURE_RAMPART && structure.hits < 80000) }
                 });
                 if (targets.length) {
                     if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
@@ -30,7 +30,7 @@ var roleRepairer = {
                     }
                 } else {
                     var targets = creep.room.find(FIND_STRUCTURES, {
-                        filter: object => object.hits < object.hitsMax && object.structureType != STRUCTURE_WALL
+                        filter: object => object.hits < object.hitsMax && object.hits < 75000
                     });
 
                     targets.sort((a, b) => a.hits - b.hits);
