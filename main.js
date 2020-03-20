@@ -27,23 +27,24 @@ module.exports.loop = function () {
             console.log(`User ${username} spotted in room ${name}`);
 
             towers.forEach(tower => tower.attack(hostiles[0]));
-        }
-        var my_creeps = Game.rooms[name].find(FIND_MY_CREEPS, {
-            filter: (creep) => {
-                return (creep.hits < creep.hitsMax);
+        } else {
+            var my_creeps = Game.rooms[name].find(FIND_MY_CREEPS, {
+                filter: (creep) => {
+                    return (creep.hits < creep.hitsMax);
+                }
+            });
+            if (my_creeps.length > 0) {
+                towers.forEach(tower => tower.heal(my_creeps[0]));
+            } else {
+                var targets = Game.rooms[name].find(FIND_STRUCTURES, {
+                    filter: object => object.hits < object.hitsMax && (object.structureType == STRUCTURE_ROAD || object.structureType == STRUCTURE_WALL || object.structureType == STRUCTURE_RAMPART) && object.hits < 75000
+                });
+
+                targets.sort((a, b) => a.hits - b.hits);
+
+                towers.forEach(tower => tower.repair(targets[0]));
             }
-        });
-        if (my_creeps.length > 0) {
-            towers.forEach(tower => tower.heal(my_creeps[0]));
         }
-        var targets = Game.rooms[name].find(FIND_STRUCTURES, {
-            filter: object => object.hits < object.hitsMax && (object.structureType == STRUCTURE_ROAD || object.structureType == STRUCTURE_WALL || object.structureType == STRUCTURE_RAMPART) && object.hits < 75000
-        });
-
-        targets.sort((a, b) => a.hits - b.hits);
-
-        towers.forEach(tower => tower.repair(targets[0]));
-
         if (Game.time % 5 == 0) {
             console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy && ' + _.filter(Game.creeps, (creep) => creep.room == Game.rooms[name]).length + ' creeps total');
         }
