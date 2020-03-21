@@ -41,8 +41,11 @@ module.exports.loop = function () {
                 });
 
                 targets.sort((a, b) => a.hits - b.hits);
-
-                towers.forEach(tower => tower.repair(targets[0]));
+                awailable_towers = Game.rooms[name].find(FIND_STRUCTURES, {
+                    filter: tower => (tower.structureType == STRUCTURE_TOWER && tower.store[RESOURCE_ENERGY] >= 300)
+                })
+                console.log(JSON.stringify(awailable_towers));
+                awailable_towers.forEach(tower => tower.repair(targets[0]));
             }
         }
         if (Game.time % 5 == 0) {
