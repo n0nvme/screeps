@@ -54,7 +54,7 @@ var creeps_spawn = {
                 if (harvesters0.length < 3 && spawn_level == 1) {
                     var newName = 'Harvester' + current_time;
                     console.log('Spawning new harvester: ' + newName + ' on spawn ' + spawn_name);
-                    game.spawns[spawn_name].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'harvester', target: 0, level: spawn_level, main_room: room_name } });
+                    game.spawns[spawn_name].spawnCreep([WORK, CARRY, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 0, level: spawn_level, main_room: room_name } });
                     return
                 } else if (harvesters0.length < 3 && spawn_level == 2) {
                     var newName = 'HarvesterBIG' + current_time;
@@ -71,7 +71,7 @@ var creeps_spawn = {
                 if (harvesters1.length < 3 && spawn_level == 1) {
                     var newName = 'Harvester' + current_time;
                     console.log('Spawning new harvester: ' + newName + ' on spawn ' + spawn_name);
-                    game.spawns[spawn_name].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level, main_room: room_name } });
+                    game.spawns[spawn_name].spawnCreep([WORK, CARRY, MOVE, MOVE], newName, { memory: { role: 'harvester', target: 1, level: spawn_level, main_room: room_name } });
                     return
                 } else if (harvesters1.length < 3 && spawn_level == 2) {
                     var newName = 'HarvesterBIG' + current_time;
@@ -93,22 +93,22 @@ var creeps_spawn = {
                 }
                 if (room_name == main_room) {
                     for (var target_room_name in remote_harvesters) {
-                        if (remote_harvesters[room_name] < 1 && spawn_level == 1) {
+                        if (remote_harvesters[target_room_name] < 1 && spawn_level == 1) {
                             var newName = 'remoteHarvester' + current_time;
                             console.log('Spawning new remote harvester: ' + newName + ' on spawn ' + spawn_name);
-                            game.spawns[spawn_name].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'remote_harvester', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            game.spawns[spawn_name].spawnCreep([WORK, CARRY, MOVE, MOVE], newName, { memory: { role: 'remote_harvester', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
-                        } else if (remote_harvesters[room_name] < 2 && spawn_level == 2) {
+                        } else if (remote_harvesters[target_room_name] < 2 && spawn_level == 2) {
                             var newName = 'RemoteHarvesterBIG' + current_time;
                             console.log('Spawning new big remote harvester: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_harvester', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
-                        } else if (remote_harvesters[room_name] < 3 && spawn_level == 3) {
+                        } else if (remote_harvesters[target_room_name] < 3 && spawn_level == 3) {
                             var newName = 'RemoteHarvesterBOSS' + current_time;
                             console.log('Spawning new BOSS remote harvester: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_harvester', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
-                        } else if (remote_harvesters[room_name] < 3 && spawn_level >= 4) {
+                        } else if (remote_harvesters[target_room_name] < 3 && spawn_level >= 4) {
                             var newName = 'RemoteHarvesterULTRA' + current_time;
                             console.log('Spawning new ULTRA remote harvester: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_harvester', target_room: target_room_name, level: spawn_level, main_room: room_name } });
@@ -164,22 +164,22 @@ var creeps_spawn = {
                 if (room_name == main_room) {
 
                     for (var target_room_name in remote_builders) {
-                        if (remote_builders[room_name] < 1 && spawn_level == 1) {
+                        if (remote_builders[target_room_name] < 1 && spawn_level == 1) {
                             var newName = 'remoteBuilder' + current_time;
                             console.log('Spawning new remote builder: ' + newName + ' on spawn ' + spawn_name);
-                            game.spawns[spawn_name].spawnCreep([WORK, WORK, CARRY, MOVE], newName, { memory: { role: 'remote_builder', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            game.spawns[spawn_name].spawnCreep([WORK, CARRY, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
-                        } else if (remote_builders[room_name] < 2 && spawn_level == 2) {
+                        } else if (remote_builders[target_room_name] < 2 && spawn_level == 2) {
                             var newName = 'RemoteBuilderBIG' + current_time;
                             console.log('Spawning new big remote builder: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
-                        } else if (remote_builders[room_name] < 3 && spawn_level == 3) {
+                        } else if (remote_builders[target_room_name] < 3 && spawn_level == 3) {
                             var newName = 'RemoteBuilderBOSS' + current_time;
                             console.log('Spawning new BOSS remote builder: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
-                        } else if (remote_builders[room_name] < 3 && spawn_level >= 4) {
+                        } else if (remote_builders[target_room_name] < 3 && spawn_level >= 4) {
                             var newName = 'RemoteBuilderULTRA' + current_time;
                             console.log('Spawning new ULTRA remote builder: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: target_room_name, level: spawn_level, main_room: room_name } });
