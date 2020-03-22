@@ -15,9 +15,6 @@ module.exports.loop = function () {
     creeps_spawn.run(Game);
 
     for (var name in Game.rooms) {
-        //if (Game.rooms[name].energyAvailable == Game.rooms[name].energyCapacityAvailable){
-        //Game.rooms[name].createConstructionSite(19, 39, STRUCTURE_EXTENSION);
-        //}
         var towers = Game.rooms[name].find(
             FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_TOWER } });
 
@@ -60,7 +57,6 @@ module.exports.loop = function () {
             continue;
         } else {
             var creep = Game.creeps[name];
-            // creep.say(name);
             if (creep.memory.role == 'harvester') {
                 roleHarvester.run(creep);
             } else if (creep.memory.role == 'remote_harvester') {

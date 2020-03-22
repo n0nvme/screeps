@@ -5,11 +5,9 @@ var roleRemoteBuilder = {
 
         if (!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
             creep.memory.building = true;
-            // creep.say('🔄 refil');
         }
         if (creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
-            // creep.say('🚧 repair');
         }
 
         if (creep.memory.building) {

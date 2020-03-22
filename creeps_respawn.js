@@ -11,9 +11,7 @@ var creeps_spawn = {
         for (spawn_name in Game.spawns) {
             room_name = Game.spawns[spawn_name].room.name;
             if (!Game.spawns[spawn_name].spawning) {
-                // room_name = main_room;
                 var dying_creeps = Game.rooms[room_name].find(FIND_MY_CREEPS, { filter: creep => creep.ticksToLive < 1200 });
-                // var dying_creeps = _.filter(game.creeps, (creep) => { creep.ticksToLive < 500 })
                 var nearest_creeps = Game.spawns[spawn_name].pos.findInRange(dying_creeps, 1);
                 if (nearest_creeps.length != 0 && Game.spawns[spawn_name].renewCreep(nearest_creeps[0])) {
                     console.log('renewing ' + nearest_creeps[0].name + ' on spawn ' + spawn_name);
@@ -34,11 +32,9 @@ var creeps_spawn = {
                 rooms_to_attack.forEach(room_to_attack => {
                     remote_attackers[room_to_attack] = _.filter(game.creeps, (creep) => creep.memory.role == 'remote_attacker' && creep.memory.target_room == room_to_attack && creep.memory.main_room == room_name).length;
                 });
-                // console.log(JSON.stringify(remote_harvesters))
 
                 var harvesters1 = _.filter(game.creeps, (creep) => creep.memory.role == 'harvester' && creep.memory.target == 1 && creep.memory.main_room == room_name);
                 var harvesters0 = _.filter(game.creeps, (creep) => creep.memory.role == 'harvester' && creep.memory.target == 0 && creep.memory.main_room == room_name);
-                // var remote_harvesters = _.filter(game.creeps, (creep) => creep.memory.role == 'remote_harvester' && creep.memory.target_room == 'E24N8' && creep.memory.main_room == room_name);
                 var builders = _.filter(game.creeps, (creep) => creep.memory.role == 'builder' && creep.memory.main_room == room_name);
                 var upgraders = _.filter(game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.main_room == room_name);
                 var repairers = _.filter(game.creeps, (creep) => creep.memory.role == 'repairer' && creep.memory.main_room == room_name);

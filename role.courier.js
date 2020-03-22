@@ -28,11 +28,8 @@ var roleCourier = {
                         return (structure.store.getUsedCapacity > 0);
                     }
                 });
-                // console.log(JSON.stringify(target));
 
                 if (target) {
-                    // console.log(JSON.stringify(target));
-                    // console.log(creep.withdraw(target, RESOURCE_ENERGY))
                     console.log(JSON.stringify(target.name))
 
                     if (creep.withdraw(target, target.store.keys()[0]) == ERR_NOT_IN_RANGE) {
@@ -72,18 +69,6 @@ var roleCourier = {
                             creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
                         }
                     }
-                    // } else {
-                    //     var targets = creep.room.find(FIND_STRUCTURES, {
-                    //         filter: (structure) => {
-                    //             return (structure.structureType == STRUCTURE_CONTAINER && structure.store.energy < structure.storeCapacity);
-                    //         }
-                    //     });
-                    //     if (targets.length > 0) {
-                    //         if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    //             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
-                    //         }
-                    //     }
-                    // }
                 }
             }
         }

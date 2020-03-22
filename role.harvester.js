@@ -5,11 +5,9 @@ var roleHarvester = {
 
         if (creep.memory.harvesting && creep.carry.energy == creep.carryCapacity) {
             creep.memory.harvesting = false;
-            // creep.say('🔄 refil');
         }
         if (!creep.memory.harvesting && creep.carry.energy == 0) {
             creep.memory.harvesting = true;
-            // creep.say('🚧 repair');
         }
 
         if (creep.memory.harvesting) {
