@@ -8,11 +8,17 @@ var roleAttacker = {
         } else {
             targets = creep.room.find(FIND_HOSTILE_CREEPS)
             if (targets.length != 0) {
-                if (creep.rangedAttack(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ee0000' } });
+                target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS);
+                if (creep.rangedAttack(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ee0000' } });
                 }
             } else {
-                targets = creep.room.find(FIND_STRUCTURES, { filer: structure => structure.type == STRUCTURE_SPAWN });
+                targets = creep.room.find(FIND_STRUCTURES, { filter: structure => structure.structureType == STRUCTURE_SPAWN });
+                if (targets.length != 0) {
+                    if (creep.rangedAttack(targets[0]) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ee0000' } });
+                    }
+                }
             }
         }
     }
