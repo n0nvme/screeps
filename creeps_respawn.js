@@ -11,11 +11,13 @@ var creeps_spawn = {
         for (spawn_name in Game.spawns) {
             room_name = Game.spawns[spawn_name].room.name;
             if (!Game.spawns[spawn_name].spawning) {
-                var dying_creeps = Game.rooms[room_name].find(FIND_MY_CREEPS, { filter: creep => creep.ticksToLive < 1200 });
+                var dying_creeps = Game.rooms[room_name].find(FIND_MY_CREEPS, { filter: creep => creep.memory.renewing });
                 var nearest_creeps = Game.spawns[spawn_name].pos.findInRange(dying_creeps, 1);
-                if (nearest_creeps.length != 0 && Game.spawns[spawn_name].renewCreep(nearest_creeps[0])) {
-                    console.log('renewing ' + nearest_creeps[0].name + ' on spawn ' + spawn_name);
-                    return;
+                if (spawn_name !== 'Spawn2') {
+                    if (nearest_creeps.length != 0 && Game.spawns[spawn_name].renewCreep(nearest_creeps[0])) {
+                        console.log('renewing ' + nearest_creeps[0].name + ' on spawn ' + spawn_name);
+                        return;
+                    }
                 }
                 var available_energy = game.rooms[room_name].energyAvailable;
                 var current_time = game.time;
