@@ -12,8 +12,9 @@ var creeps_spawn = {
             room_name = Game.spawns[spawn_name].room.name;
             if (!Game.spawns[spawn_name].spawning) {
                 // room_name = main_room;
-
-                var nearest_creeps = Game.spawns[spawn_name].pos.findInRange(FIND_MY_CREEPS, 1, { filter: (creep) => { creep.ticksToLive < 500 } })
+                var dying_creeps = Game.rooms[room_name].find(FIND_MY_CREEPS, { filter: creep => creep.ticksToLive < 1200 });
+                // var dying_creeps = _.filter(game.creeps, (creep) => { creep.ticksToLive < 500 })
+                var nearest_creeps = Game.spawns[spawn_name].pos.findInRange(dying_creeps, 1);
                 if (nearest_creeps.length != 0 && Game.spawns[spawn_name].renewCreep(nearest_creeps[0])) {
                     console.log('renewing ' + nearest_creeps[0].name + ' on spawn ' + spawn_name);
                     return;
