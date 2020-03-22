@@ -161,16 +161,19 @@ var creeps_spawn = {
                     console.log('Spawning new big upgrader: ' + newName + ' on spawn ' + spawn_name)
                     game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], newName,
                         { memory: { role: 'upgrader', level: spawn_level, main_room: room_name } });
+                    return
                 } else if (upgraders.length < 2 && spawn_level == 3) {
                     var newName = 'UpgraderBOSS' + current_time;
                     console.log('Spawning new BOSS upgrader: ' + newName + ' on spawn ' + spawn_name);
                     game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName,
                         { memory: { role: 'upgrader', level: spawn_level, main_room: room_name } });
+                    return
                 } else if (upgraders.length < 2 && spawn_level >= 4) {
                     var newName = 'UpgraderULTRA' + current_time;
                     console.log('Spawning new ULTRA upgrader: ' + newName + ' on spawn ' + spawn_name);
                     game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName,
                         { memory: { role: 'upgrader', level: spawn_level, main_room: room_name } });
+                    return
                 }
 
                 if (builders.length < 2 && spawn_level == 1) {
@@ -183,16 +186,19 @@ var creeps_spawn = {
                     console.log('Spawning new big builder: ' + newName + ' on spawn ' + spawn_name)
                     game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], newName,
                         { memory: { role: 'builder', level: spawn_level, main_room: room_name } });
+                    return
                 } else if (builders.length < 2 && spawn_level == 3) {
                     var newName = 'BuilderBOSS' + current_time;
                     console.log('Spawning new BOSS builder: ' + newName + ' on spawn ' + spawn_name)
                     game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName,
                         { memory: { role: 'builder', level: spawn_level, main_room: room_name } });
+                    return
                 } else if (builders.length < 2 && spawn_level >= 4) {
                     var newName = 'BuilderULTRA' + current_time;
                     console.log('Spawning new ULTRA builder: ' + newName + ' on spawn ' + spawn_name)
                     game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], newName,
                         { memory: { role: 'builder', level: spawn_level, main_room: room_name } });
+                    return
                 }
 
                 if (room_name == main_room) {
@@ -208,12 +214,12 @@ var creeps_spawn = {
                             console.log('Spawning new big remote builder: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
-                        } else if (remote_builders[target_room_name] < 3 && spawn_level == 3) {
+                        } else if (remote_builders[target_room_name] < 4 && spawn_level == 3) {
                             var newName = 'RemoteBuilderBOSS' + current_time;
                             console.log('Spawning new BOSS remote builder: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
-                        } else if (remote_builders[target_room_name] < 3 && spawn_level >= 4) {
+                        } else if (remote_builders[target_room_name] < 4 && spawn_level >= 4) {
                             var newName = 'RemoteBuilderULTRA' + current_time;
                             console.log('Spawning new ULTRA remote builder: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_builder', target_room: target_room_name, level: spawn_level, main_room: room_name } });
