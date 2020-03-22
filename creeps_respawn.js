@@ -176,6 +176,19 @@ var creeps_spawn = {
                     return
                 }
 
+                if (couriers.length < 1 && spawn_level != 0 && spawn_level < 4) {
+                    var newName = 'Courier' + current_time;
+                    console.log('Spawning new courier: ' + newName + ' on spawn ' + spawn_name);
+                    game.spawns[spawn_name].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'courier', level: spawn_level, main_room: room_name } });
+                    return
+                } else if (couriers.length < 4 && spawn_level >= 3) {
+                    var newName = 'CourierBIG' + current_time;
+                    console.log('Spawning new BIG courier: ' + newName + ' on spawn ' + spawn_name);
+                    game.spawns[spawn_name].spawnCreep([WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'courier', level: spawn_level, main_room: room_name } });
+                    return
+                }
+
+
                 if (builders.length < 2 && spawn_level == 1) {
                     var newName = 'Builder' + current_time;
                     console.log('Spawning new builder: ' + newName + ' on spawn ' + spawn_name);
@@ -235,18 +248,6 @@ var creeps_spawn = {
                 //     game.spawns[spawn_name].spawnCreep([CARRY, MOVE, MOVE, MOVE, MOVE, CLAIM], newName, { memory: { role: 'scout', level: spawn_level, main_room: room_name } });
                 //     return
                 // }
-                if (couriers.length < 1 && spawn_level != 0 && spawn_level < 4) {
-                    var newName = 'Courier' + current_time;
-                    console.log('Spawning new courier: ' + newName + ' on spawn ' + spawn_name);
-                    game.spawns[spawn_name].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], newName, { memory: { role: 'courier', level: spawn_level, main_room: room_name } });
-                    return
-                } else if (couriers.length < 4 && spawn_level >= 3) {
-                    var newName = 'CourierBIG' + current_time;
-                    console.log('Spawning new BIG courier: ' + newName + ' on spawn ' + spawn_name);
-                    game.spawns[spawn_name].spawnCreep([WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'courier', level: spawn_level, main_room: room_name } });
-                    return
-                }
-
             }
         }
 
