@@ -5,6 +5,8 @@ var creeps_spawn = {
 
         var rooms_to_harvest = ['E24N8', 'E25N9', 'E25N8']
         var rooms_to_build = ['E23N8']
+        var rooms_to_attack = []
+
 
         for (spawn_name in Game.spawns) {
             room_name = Game.spawns[spawn_name].room.name;
@@ -26,6 +28,10 @@ var creeps_spawn = {
                 var remote_builders = {}
                 rooms_to_build.forEach(room_to_build => {
                     remote_builders[room_to_build] = _.filter(game.creeps, (creep) => creep.memory.role == 'remote_builder' && creep.memory.target_room == room_to_build && creep.memory.main_room == room_name).length;
+                });
+                var remote_attackers = {}
+                rooms_to_attack.forEach(room_to_attack => {
+                    remote_attackers[room_to_attack] = _.filter(game.creeps, (creep) => creep.memory.role == 'remote_attacker' && creep.memory.target_room == room_to_attack && creep.memory.main_room == room_name).length;
                 });
                 // console.log(JSON.stringify(remote_harvesters))
 
@@ -91,6 +97,34 @@ var creeps_spawn = {
                     game.spawns[spawn_name].spawnCreep([WORK, CARRY, MOVE, MOVE], newName, { memory: { role: 'repairer', level: spawn_level, main_room: room_name } });
                     return
                 }
+
+                if (room_name == main_room) {
+
+                    for (var target_room_name in remote_attackers) {
+                        if (remote_attackers[target_room_name] < 1 && spawn_level == 1) {
+                            var newName = 'remoteAttacker' + current_time;
+                            console.log('Spawning new remote attacker: ' + newName + ' on spawn ' + spawn_name);
+                            game.spawns[spawn_name].spawnCreep([RANGED_ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, MOVE], newName, { memory: { role: 'remote_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            return
+                        } else if (remote_attackers[target_room_name] < 2 && spawn_level == 2) {
+                            var newName = 'RemoteAttackerBIG' + current_time;
+                            console.log('Spawning new big remote attacker: ' + newName + ' on spawn ' + spawn_name);
+                            game.spawns[spawn_name].spawnCreep([RANGED_ATTACK, RANGED_ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            return
+                        } else if (remote_attackers[target_room_name] < 3 && spawn_level == 3) {
+                            var newName = 'RemoteAttackerBOSS' + current_time;
+                            console.log('Spawning new BOSS remote attacker: ' + newName + ' on spawn ' + spawn_name);
+                            game.spawns[spawn_name].spawnCreep([RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, CARRY, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            return
+                        } else if (remote_attackers[target_room_name] < 3 && spawn_level >= 4) {
+                            var newName = 'RemoteAttackerULTRA' + current_time;
+                            console.log('Spawning new ULTRA remote attacker: ' + newName + ' on spawn ' + spawn_name);
+                            game.spawns[spawn_name].spawnCreep([RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            return
+                        }
+                    }
+                }
+
                 if (room_name == main_room) {
                     for (var target_room_name in remote_harvesters) {
                         if (remote_harvesters[target_room_name] < 1 && spawn_level == 1) {

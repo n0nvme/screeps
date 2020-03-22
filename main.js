@@ -6,6 +6,7 @@ var roleCourier = require('role.courier');
 var roleScout = require('role.scout');
 var roleRemoteHarvester = require('role.remote_harvester');
 var roleRemoteBuilder = require('role.remote_builder');
+var roleAttacker = require('role.attacker');
 var creeps_spawn = require('creeps_respawn');
 
 module.exports.loop = function () {
@@ -72,6 +73,9 @@ module.exports.loop = function () {
             }
             else if (creep.memory.role == 'builder') {
                 roleBuilder.run(creep);
+            }
+            else if (creep.memory.role == 'remote_attacker') {
+                roleAttacker.run(creep)
             }
             else if (creep.memory.role == 'repairer') {
                 roleRepairer.run(creep)
