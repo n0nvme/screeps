@@ -1,4 +1,4 @@
-var roleAttacker = {
+var roleRemoteAttacker = {
 
     /** @param {Creep} creep **/
     run: function (creep) {
@@ -8,19 +8,19 @@ var roleAttacker = {
         } else {
             target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS);
             if (target) {
-                if (creep.attack(target) == ERR_NOT_IN_RANGE) {
+                if (creep.rangedAttack(target) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target, { visualizePathStyle: { stroke: '#ee0000' } });
                 }
             } else {
                 target = creep.pos.findClosestByPath(FIND_HOSTILE_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_INVADER_CORE })
                 if (target) {
-                    if (creep.attack(target) == ERR_NOT_IN_RANGE) {
+                    if (creep.rangedAttack(target) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(target, { visualizePathStyle: { stroke: '#ee0000' } });
                     }
                 } else {
                     targets = creep.room.find(FIND_STRUCTURES, { filter: structure => structure.structureType == STRUCTURE_SPAWN });
                     if (targets.length != 0) {
-                        if (creep.attack(targets[0]) == ERR_NOT_IN_RANGE) {
+                        if (creep.rangedAttack(targets[0]) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ee0000' } });
                         }
                     }
@@ -30,4 +30,4 @@ var roleAttacker = {
     }
 };
 
-module.exports = roleAttacker;
+module.exports = roleRemoteAttacker;

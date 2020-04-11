@@ -6,6 +6,7 @@ var roleCourier = require('role.courier');
 var roleScout = require('role.scout');
 var roleRemoteHarvester = require('role.remote_harvester');
 var roleRemoteBuilder = require('role.remote_builder');
+var roleRemoteAttacker = require('role.remote_attacker');
 var roleAttacker = require('role.attacker');
 var creeps_spawn = require('creeps_respawn');
 
@@ -72,16 +73,19 @@ module.exports.loop = function () {
                 roleBuilder.run(creep);
             }
             else if (creep.memory.role == 'remote_attacker') {
-                roleAttacker.run(creep)
+                roleRemoteAttacker.run(creep);
+            }
+            else if (creep.memory.role == 'remote_attacker') {
+                roleAttacker.run(creep);
             }
             else if (creep.memory.role == 'repairer') {
-                roleRepairer.run(creep)
+                roleRepairer.run(creep);
             }
             else if (creep.memory.role == 'scout') {
-                roleScout.run(creep)
+                roleScout.run(creep);
             }
             else if (creep.memory.role == 'courier') {
-                roleCourier.run(creep)
+                roleCourier.run(creep);
             }
             // console.log(Game.cpu.getUsed())
         }

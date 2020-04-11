@@ -5,7 +5,7 @@ var creeps_spawn = {
 
         var rooms_to_harvest = ['E24N8', 'E25N9', 'E25N8']
         var rooms_to_build = ['E23N8']
-        var rooms_to_attack = []
+        var rooms_to_attack = ['E24N8']
 
 
         for (spawn_name in Game.spawns) {
@@ -33,6 +33,10 @@ var creeps_spawn = {
                 var remote_attackers = {}
                 rooms_to_attack.forEach(room_to_attack => {
                     remote_attackers[room_to_attack] = _.filter(game.creeps, (creep) => creep.memory.role == 'remote_attacker' && creep.memory.target_room == room_to_attack && creep.memory.main_room == room_name).length;
+                });
+                var remote_close_attackers = {}
+                rooms_to_attack.forEach(room_to_attack => {
+                    remote_attackers[room_to_attack] = _.filter(game.creeps, (creep) => creep.memory.role == 'remote_close_attacker' && creep.memory.target_room == room_to_attack && creep.memory.main_room == room_name).length;
                 });
 
                 var harvesters1 = _.filter(game.creeps, (creep) => creep.memory.role == 'harvester' && creep.memory.target == 1 && creep.memory.main_room == room_name);
@@ -119,6 +123,29 @@ var creeps_spawn = {
                             var newName = 'RemoteAttackerULTRA' + current_time;
                             console.log('Spawning new ULTRA remote attacker: ' + newName + ' on spawn ' + spawn_name);
                             game.spawns[spawn_name].spawnCreep([RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            return
+                        }
+                    }
+                    for (var target_room_name in remote_close_attackers) {
+                        if (remote_attackers[target_room_name] < 1 && spawn_level == 1) {
+                            var newName = 'remoteAttacker' + current_time;
+                            console.log('Spawning new remote attacker: ' + newName + ' on spawn ' + spawn_name);
+                            game.spawns[spawn_name].spawnCreep([ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, MOVE], newName, { memory: { role: 'remote_close_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            return
+                        } else if (remote_close_attackers[target_room_name] < 2 && spawn_level == 2) {
+                            var newName = 'RemoteAttackerBIG' + current_time;
+                            console.log('Spawning new big remote attacker: ' + newName + ' on spawn ' + spawn_name);
+                            game.spawns[spawn_name].spawnCreep([ATTACK, ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_close_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            return
+                        } else if (remote_close_attackers[target_room_name] < 3 && spawn_level == 3) {
+                            var newName = 'RemoteAttackerBOSS' + current_time;
+                            console.log('Spawning new BOSS remote attacker: ' + newName + ' on spawn ' + spawn_name);
+                            game.spawns[spawn_name].spawnCreep([ATTACK, ATTACK, ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, CARRY, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_close_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
+                            return
+                        } else if (remote_close_attackers[target_room_name] < 3 && spawn_level >= 4) {
+                            var newName = 'RemoteAttackerULTRA' + current_time;
+                            console.log('Spawning new ULTRA remote attacker: ' + newName + ' on spawn ' + spawn_name);
+                            game.spawns[spawn_name].spawnCreep([ATTACK, ATTACK, ATTACK, ATTACK, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], newName, { memory: { role: 'remote_close_attacker', target_room: target_room_name, level: spawn_level, main_room: room_name } });
                             return
                         }
                     }
