@@ -17,32 +17,33 @@ module.exports.loop = function () {
     for (var name in Game.rooms) {
         var towers = Game.rooms[name].find(
             FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_TOWER } });
+        if (towers.length > 0) {
+            var hostiles = Game.rooms[name].find(FIND_HOSTILE_CREEPS);
+            if (hostiles.length > 0) {
+                var username = hostiles[0].owner.username;
+                Game.notify(`User ${username} spotted in room ${name}`);
+                console.log(`User ${username} spotted in room ${name}`);
 
-        var hostiles = Game.rooms[name].find(FIND_HOSTILE_CREEPS);
-        if (hostiles.length > 0) {
-            var username = hostiles[0].owner.username;
-            Game.notify(`User ${username} spotted in room ${name}`);
-            console.log(`User ${username} spotted in room ${name}`);
-
-            towers.forEach(tower => tower.attack(hostiles[0]));
-        } else {
-            var my_creeps = Game.rooms[name].find(FIND_MY_CREEPS, {
-                filter: (creep) => {
-                    return (creep.hits < creep.hitsMax);
-                }
-            });
-            if (my_creeps.length > 0) {
-                towers.forEach(tower => tower.heal(my_creeps[0]));
+                towers.forEach(tower => tower.attack(hostiles[0]));
             } else {
-                var targets = Game.rooms[name].find(FIND_STRUCTURES, {
-                    filter: object => object.hits < object.hitsMax && (object.structureType == STRUCTURE_ROAD || object.structureType == STRUCTURE_WALL || object.structureType == STRUCTURE_RAMPART) && object.hits < 75000
+                var my_creeps = Game.rooms[name].find(FIND_MY_CREEPS, {
+                    filter: (creep) => {
+                        return (creep.hits < creep.hitsMax);
+                    }
                 });
+                if (my_creeps.length > 0) {
+                    towers.forEach(tower => tower.heal(my_creeps[0]));
+                } else {
+                    var targets = Game.rooms[name].find(FIND_STRUCTURES, {
+                        filter: object => object.hits < object.hitsMax && (object.structureType == STRUCTURE_ROAD || object.structureType == STRUCTURE_WALL || object.structureType == STRUCTURE_RAMPART) && object.hits < 75000
+                    });
 
-                targets.sort((a, b) => a.hits - b.hits);
-                awailable_towers = Game.rooms[name].find(FIND_STRUCTURES, {
-                    filter: tower => (tower.structureType == STRUCTURE_TOWER && tower.store[RESOURCE_ENERGY] >= 300)
-                })
-                awailable_towers.forEach(tower => tower.repair(targets[0]));
+                    targets.sort((a, b) => a.hits - b.hits);
+                    awailable_towers = Game.rooms[name].find(FIND_STRUCTURES, {
+                        filter: tower => (tower.structureType == STRUCTURE_TOWER && tower.store[RESOURCE_ENERGY] >= 300)
+                    })
+                    awailable_towers.forEach(tower => tower.repair(targets[0]));
+                }
             }
         }
         if (Game.time % 5 == 0) {

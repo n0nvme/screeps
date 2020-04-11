@@ -6,9 +6,8 @@ var roleAttacker = {
         if (creep.room.name !== creep.memory.target_room) {
             creep.moveTo(new RoomPosition(25, 25, creep.memory.target_room), { visualizePathStyle: { stroke: '#ee0000' } })
         } else {
-            targets = creep.room.find(FIND_HOSTILE_CREEPS)
-            if (targets.length != 0) {
-                target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS);
+            target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS);
+            if (targets) {
                 if (creep.rangedAttack(target) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target, { visualizePathStyle: { stroke: '#ee0000' } });
                 }
