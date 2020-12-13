@@ -2,6 +2,17 @@ var roleHarvester = {
 
     /** @param {Creep} creep **/
     run: function (creep) {
+        if (creep.room.name == creep.memory.main_room && creep.carry.energy == 0 && creep.ticksToLive < 300 && creep.memory.level >= 2) {
+            creep.memory.renewing = true;
+        }
+        if (creep.memory.renewing && creep.ticksToLive >= 1200) {
+            creep.memory.renewing = false;
+        }
+        if (creep.memory.renewing) {
+            var target = creep.pos.findClosestByPath(FIND_MY_SPAWNS);
+            creep.moveTo(target);
+            return;
+        }
 
         if (creep.memory.harvesting && creep.carry.energy == creep.carryCapacity) {
             creep.memory.harvesting = false;
@@ -9,6 +20,7 @@ var roleHarvester = {
         if (!creep.memory.harvesting && creep.carry.energy == 0) {
             creep.memory.harvesting = true;
         }
+
 
         if (creep.memory.harvesting) {
             var sources = creep.room.find(FIND_SOURCES);

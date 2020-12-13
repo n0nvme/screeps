@@ -14,7 +14,7 @@ var spawn_settings = {
     },
     2: {
         counts: {
-            harvesters0: 5, harvesters1: 6, repairers: 2, upgraders: 2, builders: 3, couriers: 1, remote_harvesters: 5,
+            harvesters0: 6, harvesters1: 7, repairers: 2, upgraders: 2, builders: 5, couriers: 1, remote_harvesters: 4,
         },
         types: {
             harvester: [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE],
