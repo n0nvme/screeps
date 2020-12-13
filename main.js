@@ -36,7 +36,7 @@ module.exports.loop = function () {
                     towers.forEach(tower => tower.heal(my_creeps[0]));
                 } else {
                     var targets = Game.rooms[name].find(FIND_STRUCTURES, {
-                        filter: object => object.hits < object.hitsMax && (object.structureType == STRUCTURE_ROAD || object.structureType == STRUCTURE_WALL || object.structureType == STRUCTURE_RAMPART) && object.hits < 75000
+                        filter: object => object.hits < object.hitsMax && (object.structureType == STRUCTURE_ROAD || object.structureType == STRUCTURE_WALL || object.structureType == STRUCTURE_RAMPART) && object.hits < 5000
                     });
 
                     targets.sort((a, b) => a.hits - b.hits);
